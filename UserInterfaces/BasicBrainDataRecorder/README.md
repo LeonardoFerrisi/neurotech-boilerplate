@@ -16,3 +16,7 @@
 or 
 
     npm run start
+
+# Notes
+
+The code 200 indicates an OK status if a message is successfully sent between processes
