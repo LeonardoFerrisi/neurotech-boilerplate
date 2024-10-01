@@ -1,33 +1,39 @@
-from flask import Flask, jsonify
-import time
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Global variable to manage process state
-process_thread = None
-process_running = False
+@app.route('/test')
+def hello():
+    return "Hello World!"
 
-def background_process():
-    global process_running
-    process_running = True
-    while process_running:
-        print("Process is running...")
-        time.sleep(1)
+@app.route('/start_process')
+def start_proc():
+    data = {"message": "Process Started"}
+    return jsonify(data)
 
-@app.route('/start_process', methods=['POST'])
-def start_process():
-    global process_thread
-    if not process_running:
-        return jsonify({"status": "Process started"}), 200
-    return jsonify({"status": "Process already running"}), 200
+@app.route('/stop_process')
+def stop_proc():
+    data = {"message": "Process Stopped"}
+    return jsonify(data)
 
-@app.route('/stop_process', methods=['POST'])
-def stop_process():
-    global process_running
-    process_running = False
-    if process_thread:
-        process_thread.join()
-    return jsonify({"status": "Process stopped"}), 200
+@app.route('/command', methods=['POST'])
+def execute_command():
+    command = request.json.get('command')
+    
+    if command == 'start':
+        # Implement your start logic here
+        return jsonify({'status': 'START Command received'})
+    
+    elif command == 'stop':
+        # Implement your stop logic here
+        return jsonify({'status': 'STOP Command received'})
+    
+    elif command == 'restart':
+        # Implement your restart logic here
+        return jsonify({'status': 'RESTART Command received'})
 
+    else:
+        return jsonify({'error': 'Unknown command'}), 400
+    
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(host='127.0.0.1', port=5000)
