@@ -4,6 +4,7 @@
 
 - [Python](https://www.python.org/downloads/) >= 3.10
 - [Git](https://git-scm.com/)
+- [NodeJS](https://nodejs.org/en/download/package-manager)
 
 ### Nice to have
 - [Visual Studio Code](https://code.visualstudio.com/?wt.mc_id=vscom_downloads)
